@@ -1,35 +1,109 @@
 <!doctype html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
-    </style>
+    <title>HackNC Messages</title>
+	<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:900' rel='stylesheet' type='text/css'>
+	<style>
+	* {
+		margin:0px;
+		padding:0px;
+	}
+	.message-block {
+	  margin: auto;
+	  display: block;
+	  position: absolute;
+	  top: 30%; left: 0; right: 0;
+	  text-align:center;
+	  background-color:rgba(224, 73, 70, 0.81);
+	  display:none;
+	}
+	.message {
+		margin-left:auto;
+		margin-right:auto;
+		display:inline-block;
+		font-family: 'Lato', sans-serif;
+		width: 50%;
+		font-size: 5em;
+	}
+	body {
+		background-image: url(http://hacknc.us/images/backgrounds/compressed/3_2048-compressed.jpg);
+		background-size:cover;
+	}
+	#tick2 {
+		display:block;
+		position:absolute;
+		right:0.25em;
+		bottom:0;
+		color:rgba(255,255,255,0.9);
+		font-family: 'Source Code Pro';
+		font-size:10em;
+		-webkit-text-stroke: 1px black;
+		text-shadow:
+		   3px 3px 0 rgba(0,0,0,0.5),
+		 -1px -1px 0 #000,  
+		  1px -1px 0 #000,
+		  -1px 1px 0 #000,
+		   1px 1px 0 #000;
+	}
+	</style>
   </head>
   <body>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
+    <div id="blocko" class="message-block"><span class="message" id="message">m</span></div>
+	<span id=tick2></span>
 	<script src="/socket.io/socket.io.js"></script>
+	<script src="mespeak.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	<script>
 	  var socket = io();
-	  $('form').submit(function(){
-		socket.emit('chat message', $('#m').val());
-		$('#m').val('');
-		return false;
-	  });
-	  socket.on('chat message', function(msg){
-		$('#messages').append($('<li>').text(msg));
+	  meSpeak.loadConfig("mespeak_config.json");
+	  meSpeak.loadVoice('en-us.json');
+	  socket.on('message', function(msg){
+		console.log(msg);
+		$('#blocko').fadeIn(2000)
+		$('#message').text(msg);
+		document.getElementById('audio').play();
+		setTimeout(function(){
+			meSpeak.speak(msg, {"speed":125});
+		}, 1500);
+		
 	  });
 	</script>
+	<script>
+		<!--
+
+		/*By JavaScript Kit
+		http://javascriptkit.com
+		Credit MUST stay intact for use
+		such script kiddie very wow
+		*/
+	
+		function show2(){
+		if (!document.all&&!document.getElementById)
+			return
+		thelement=document.getElementById? document.getElementById("tick2"): document.all.tick2
+		var Digital=new Date()
+		var hours=Digital.getHours()
+		var minutes=Digital.getMinutes()
+		var seconds=Digital.getSeconds()
+		var dn="PM"
+		if (hours<12)
+			dn="AM"
+		if (hours>12)
+			hours=hours-12
+		if (hours==0)
+			hours=12
+		if (minutes<=9)
+			minutes="0"+minutes
+		if (seconds<=9)
+			seconds="0"+seconds
+		var ctime=hours+":"+minutes+":"+seconds+" "+dn
+		thelement.innerHTML=ctime
+		setTimeout("show2()",1000)
+		}
+		window.onload=show2
+		//-->
+		</script>
+	<audio src="s.ogg" id="audio" preload>
   </body>
 </html>

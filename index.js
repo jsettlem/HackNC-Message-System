@@ -3,7 +3,6 @@ var path = require('path');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var MailChimpAPI = require('mailchimp').MailChimpAPI;
-var md5o = require('MD5');
 var secret = require('./secret.json');
 var apiKey = secret.key;
 

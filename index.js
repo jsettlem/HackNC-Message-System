@@ -43,7 +43,6 @@ app.get('/s.ogg', function(req, res){
 io.on('connection', function(socket){
   socket.on('message', function(msg){
 	console.log(msg);
-	messageArchive.push(msg);
 	if (msg.pass===secret.pass) {
 		io.emit("message", msg.msg);
 		try {
@@ -60,9 +59,16 @@ io.on('connection', function(socket){
 			}
 		} catch (e) {
 		}
+		msg.pass="";
+		messageArchive.push(msg);
 	};
 	
   });
+});
+
+//archive
+app.get('/archive', function(req, res) {
+	res.send(JSON.stringify(messageArchive, null, '\t').split("\n").join("<br>"));
 });
 
 http.listen(9001, function(){

@@ -73,3 +73,6 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+secret.json
+test.js
+test.txt

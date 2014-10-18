@@ -39,8 +39,8 @@ app.get('/s.ogg', function(req, res){
   res.sendFile(path.join(__dirname, './', 's.ogg'));
 });
 
-app.get('/jquery.fittext.js', function(req, res){
-  res.sendFile(path.join(__dirname, './', 'jquery.fittext.js'));
+app.get('/jquery.textfill.min.js', function(req, res){
+  res.sendFile(path.join(__dirname, './', 'jquery.textfill.min.js'));
 });
 
 //socket.io stuff

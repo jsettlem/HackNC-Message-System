@@ -52,24 +52,33 @@
 	</style>
   </head>
   <body>
-    <div id="blocko" class="message-block"><span class="message" id="message">m</span></div>
+    <div id="blocko" class="message-block"><span class="message" id="message"><span id="m">m</span></div>
 	<span id=tick2></span>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="mespeak.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	<script>
+	</script>
+	<script>
 	  var socket = io();
+	  var timeouts = [];
 	  meSpeak.loadConfig("mespeak_config.json");
 	  meSpeak.loadVoice('en-us.json');
 	  socket.on('message', function(msg){
 		console.log(msg);
+		var stream = meSpeak.speak(msg, {"speed":125, 'rawdata': true})
 		$('#blocko').fadeIn(2000)
 		$('#message').text(msg);
 		document.getElementById('audio').play();
+		for (var i=0; i<timeouts.length; i++) {
+		  clearTimeout(timeouts[i]);
+		}
 		setTimeout(function(){
-			meSpeak.speak(msg, {"speed":125});
+			meSpeak.play(stream);
 		}, 1500);
-		
+		timeouts.push(setTimeout(function(){
+			$('#blocko').fadeOut(2000)
+		}, 300000));
 	  });
 	</script>
 	<script>

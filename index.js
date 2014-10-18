@@ -39,6 +39,10 @@ app.get('/s.ogg', function(req, res){
   res.sendFile(path.join(__dirname, './', 's.ogg'));
 });
 
+app.get('/jquery.fittext.js', function(req, res){
+  res.sendFile(path.join(__dirname, './', 'jquery.fittext.js'));
+});
+
 //socket.io stuff
 io.on('connection', function(socket){
   socket.on('message', function(msg){
@@ -58,9 +62,13 @@ io.on('connection', function(socket){
 				});
 			}
 		} catch (e) {
+			socket.emit("message", {'error':e});
 		}
 		msg.pass="";
 		messageArchive.push(msg);
+	} else {
+		console.log("wow");
+		socket.emit("message", {'error':"invalid password"});
 	};
 	
   });

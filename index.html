@@ -131,7 +131,7 @@
 		$(document).keypress(function(event) {
 		console.log("hi");
 		if (event.key==="r") {
-			$("#room").html("<span style='position: absolute;bottom:0;'>You're&nbsp;in&nbsp;" + window.prompt("What room is this?", "SN014")+"</span>").textfill({maxFontPixels:0});
+			$("#room").html("<span style='position: absolute;bottom:0;'>You're&nbsp;in&nbsp;" + window.prompt("What room is this?", "SN014").replace(" ", "&nbsp;")+"</span>").textfill({maxFontPixels:0});
 		};
 	  });
 	  $(document).ready(function(){

@@ -169,8 +169,8 @@
 		if (cookieRoom) {
 			$("#room").html("<span style='position: absolute;bottom:0;'>You're&nbsp;in&nbsp;" + cookieRoom +"</span>").textfill({maxFontPixels:0});
 		}
-		$(document).keypress(function(event) {
-			if (event.key==="r") {
+		$(document).keydown(function(event) {
+			if (event.which===82) {
 				var roomName = window.prompt("What room is this?", "SN014").replace(" ", "&nbsp;");
 				$("#room").html("<span style='position: absolute;bottom:0;'>You're&nbsp;in&nbsp;" + roomName +"</span>").textfill({maxFontPixels:0});
 				document.cookie = "room=" + roomName
@@ -178,7 +178,7 @@
 					$('<img/>')[0].src = this;
 				});
 			};
-			if (event.key==="c") {
+			if (event.which===67) {
 				chromaMode = true;
 				setBackground();
 				if (chromaMode) {

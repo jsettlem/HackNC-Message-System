@@ -99,7 +99,7 @@
 	<div class="room" id="room" style="height:20%; width:40%"></div>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="mespeak.js"></script>
-	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="jquery.textfill.min.js"></script>
 	<script>
 	</script>
@@ -132,6 +132,9 @@
 		console.log("hi");
 		if (event.key==="r") {
 			$("#room").html("<span style='position: absolute;bottom:0;'>You're&nbsp;in&nbsp;" + window.prompt("What room is this?", "SN014").replace(" ", "&nbsp;")+"</span>").textfill({maxFontPixels:0});
+			$(backgrounds).each(function(){
+				$('<img/>')[0].src = this;
+			});
 		};
 	  });
 	  $(document).ready(function(){
@@ -176,7 +179,21 @@
 		</script>
 		<script>
 		//TODO: Externalize :P
+		var backgrounds= ["http://hacknc.us/images/backgrounds/compressed/0_2048-compressed.jpg", 
+		"http://hacknc.us/images/backgrounds/compressed/10_2048-compressed.jpg", 
+		"http://hacknc.us/images/backgrounds/compressed/11_2048-compressed.jpg", 
+		"http://hacknc.us/images/backgrounds/compressed/1_2048-compressed.jpg", 
+		"http://hacknc.us/images/backgrounds/compressed/2_2048-compressed.jpg", 
+		"http://hacknc.us/images/backgrounds/compressed/3_2048-compressed.jpg", 
+		"http://hacknc.us/images/backgrounds/compressed/4_2048-compressed.jpg", 
+		"http://hacknc.us/images/backgrounds/compressed/5_2048-compressed.jpg", 
+		"http://hacknc.us/images/backgrounds/compressed/6_2048-compressed.jpg", 
+		"http://hacknc.us/images/backgrounds/compressed/7_2048-compressed.jpg", 
+		"http://hacknc.us/images/backgrounds/compressed/8_2048-compressed.jpg", 
+		"http://hacknc.us/images/backgrounds/compressed/9_2048-compressed.jpg"]
+		
 		var schedule = [
+		[new Date("October 23, 2014 23:10:00"), "Persona!"],
 		[new Date("October 25, 2014 11:00:00"), "HackNC Begins"],
 		[new Date("October 25, 2014 11:00:01"), "Career fair"],
 		[new Date("October 25, 2014 11:30:00"), "Lunch with sponsors"],
@@ -201,7 +218,46 @@
 		[new Date("October 26, 2014 12:30:00"), "Expo"],
 		[new Date("October 26, 2014 2:00:00"), "Closing ceremony"],
 		[new Date("October 26, 2014 4:00:00"), "Time to go... :("]]
-
+		function getEvent() {
+			var currentTime = new Date();
+			var i = 0;
+			var size = schedule.length;
+			while (schedule[i][0] < currentTime) {
+				i++;
+			}
+			toReturn = [];
+			for (j = i; j < Math.min(i+1, size); j++) {
+				var hoursTil = (schedule[j][0].getTime() - currentTime.getTime()) / 1000 / 60 / 60;
+				if (hoursTil > 1.5) {
+					hoursTil = Math.round(hoursTil);
+					toReturn.push("About " + hoursTil + " hours until '" + schedule[j][1] + "'");
+				} else {
+					minutesTil = hoursTil * 60;
+					if (minutesTil > 1.5) {
+						minutesTil = Math.round(minutesTil);
+						toReturn.push("About " + minutesTil + " minutes until '" + schedule[j][1] + "'");
+					} else {
+						secondsTil = Math.round(minutesTil * 60);
+						toReturn.push(secondsTil + " second(s) until '" + schedule[j][1] + "'");
+					}
+				}
+			}
+			return toReturn.length > 0 ? toReturn : ["See you next time!"]
+		}
+		
+		
+		
+		setInterval(function(){
+			console.log(getEvent());
+			events = getEvent();
+			document.getElementById("scroller").innerHTML = "<span>" + events[0] + "</span>";
+			$("#scroller").textfill({maxFontPixels:0});
+		}, 1000);
+		
+		setInterval(function(){
+			$("body").css("background-image", "url(" + backgrounds[Math.floor(Math.random() * backgrounds.length)] + ")");
+		}, 6000);
+		
 		</script>
 	<audio src="s.ogg" id="audio" preload>
   </body>

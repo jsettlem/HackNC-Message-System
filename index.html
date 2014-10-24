@@ -131,24 +131,28 @@
 	  meSpeak.loadVoice('en-us.json');
 	  socket.on('message', function(msg){
 		console.log(msg);
-		var stream = meSpeak.speak(msg, {"speed":125, 'rawdata': true})
-		$('#schedule').fadeOut(100);
-		$('#blocko').fadeIn(2000);
-		$('#scroller').slideDown(700);
-		$('#message').text(msg);
-		$('#blocko').textfill({maxFontPixels:0});
-		document.getElementById('audio').play();
-		for (var i=0; i<timeouts.length; i++) {
-		  clearTimeout(timeouts[i]);
+		if (msg === "refresh") {
+			location.reload(true);
+		} else {
+			var stream = meSpeak.speak(msg, {"speed":125, 'rawdata': true})
+			$('#schedule').fadeOut(100);
+			$('#blocko').fadeIn(2000);
+			$('#scroller').slideDown(700);
+			$('#message').text(msg);
+			$('#blocko').textfill({maxFontPixels:0});
+			document.getElementById('audio').play();
+			for (var i=0; i<timeouts.length; i++) {
+			  clearTimeout(timeouts[i]);
+			}
+			setTimeout(function(){
+				meSpeak.play(stream);
+			}, 1500);
+			timeouts.push(setTimeout(function(){
+				$('#blocko').fadeOut(2000);
+				$('#schedule').fadeIn(2000);
+				$('#scroller').fadeOut(2000);
+			}, 300000));
 		}
-		setTimeout(function(){
-			meSpeak.play(stream);
-		}, 1500);
-		timeouts.push(setTimeout(function(){
-			$('#blocko').fadeOut(2000);
-			$('#schedule').fadeIn(2000);
-			$('#scroller').fadeOut(2000);
-		}, 300000));
 	  });
 	</script>
 	<script>

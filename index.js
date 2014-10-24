@@ -51,7 +51,7 @@ io.on('connection', function(socket){
 		io.emit("message", msg.msg);
 		try {
 			if (msg.email) {
-				api.call('campaigns', 'create', {type:"plaintext", options:{list_id:"d97dd4cb46", subject:msg.subject, from_email:"contact@hacknc.us", from_name: "HackNC", to_name:"*|NAME|*"}, content:{text:msg.body}}, function (error, data) {
+				api.call('campaigns', 'create', {type:"plaintext", options:{list_id:secret.list, subject:msg.subject, from_email:"contact@hacknc.us", from_name: "HackNC", to_name:"*|NAME|*"}, content:{text:msg.body}}, function (error, data) {
 					if (error) {
 						console.log(error.message);
 						console.log("error!")

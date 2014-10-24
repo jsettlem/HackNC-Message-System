@@ -156,10 +156,16 @@
 	  });
 	</script>
 	<script>
+		var cookieRoom = document.cookie.replace(/(?:(?:^|.*;\s*)room\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+		if (cookieRoom) {
+			$("#room").html("<span style='position: absolute;bottom:0;'>You're&nbsp;in&nbsp;" + cookieRoom +"</span>").textfill({maxFontPixels:0});
+		}
 		$(document).keypress(function(event) {
 		console.log("hi");
 		if (event.key==="r") {
-			$("#room").html("<span style='position: absolute;bottom:0;'>You're&nbsp;in&nbsp;" + window.prompt("What room is this?", "SN014").replace(" ", "&nbsp;")+"</span>").textfill({maxFontPixels:0});
+			var roomName = window.prompt("What room is this?", "SN014").replace(" ", "&nbsp;");
+			$("#room").html("<span style='position: absolute;bottom:0;'>You're&nbsp;in&nbsp;" + roomName +"</span>").textfill({maxFontPixels:0});
+			document.cookie = "room=" + roomName
 			$(backgrounds).each(function(){
 				$('<img/>')[0].src = this;
 			});
@@ -224,34 +230,34 @@
 		"http://hacknc.us/images/backgrounds/compressed/9_2048-compressed.jpg"]
 		
 		var schedule = [
-		[new Date("October 24, 2014 00:47:00"), "Persona!"],
-		[new Date("October 24, 2014 00:48:00"), "Persona 2!"],
-		[new Date("October 24, 2014 00:49:00"), "Persona 3!"],
-		[new Date("October 24, 2014 00:50:00"), "Persona 4!"],
-		[new Date("October 25, 2014 11:00:00"), "HackNC Begins"],
-		[new Date("October 25, 2014 11:00:01"), "Career fair"],
-		[new Date("October 25, 2014 11:30:00"), "Lunch with sponsors"],
-		[new Date("October 25, 2014 12:30:00"), "Opening Ceremony"],
-		[new Date("October 25, 2014 13:30:00"), "Hacking begins!"],
-		[new Date("October 25, 2014 13:30:01"), "Career fair continues"],
-		[new Date("October 25, 2014 14:00:00"), "Workshops begin"],
-		[new Date("October 25, 2014 14:00:01"), "VR Workshop!"],
-		[new Date("October 25, 2014 15:00:00"), "Microsoft - Analytics Web APIs"],
-		[new Date("October 25, 2014 16:00:00"), "Google - Mesa Tech Talk"],
-		[new Date("October 25, 2014 17:00:00"), "Square - Technical Interviewing"],
-		[new Date("October 25, 2014 18:00:00"), "Square - Dinner for the ladies"],
-		[new Date("October 25, 2014 18:00:01"), "Dinner for the everyone"],
-		[new Date("October 25, 2014 19:00:01"), "EMC tech talk"],
-		[new Date("October 25, 2014 19:00:01"), "EMC tech talk"],
-		[new Date("October 25, 2014 20:00:01"), "Video game tournaments"],
-		[new Date("October 26, 2014 00:00:01"), "SPECIAL EVENT"],
-		[new Date("October 26, 2014 01:00:00"), "Nap room opens"],
-		[new Date("October 26, 2014 07:00:00"), "Breakfast"],
-		[new Date("October 26, 2014 11:30:00"), "Lunch"],
-		[new Date("October 26, 2014 12:00:00"), "Hacking ends"],
-		[new Date("October 26, 2014 12:30:00"), "Expo"],
-		[new Date("October 26, 2014 2:00:00"), "Closing ceremony"],
-		[new Date("October 26, 2014 4:00:00"), "Time to go... :("]]
+			[new Date("October 24, 2014 00:47:00"), "Persona!"],
+			[new Date("October 24, 2014 00:48:00"), "Persona 2!"],
+			[new Date("October 24, 2014 00:49:00"), "Persona 3!"],
+			[new Date("October 24, 2014 00:50:00"), "Persona 4!"],
+			[new Date("October 25, 2014 11:00:00"), "HackNC Begins"],
+			[new Date("October 25, 2014 11:00:01"), "Career fair"],
+			[new Date("October 25, 2014 11:30:00"), "Lunch with sponsors"],
+			[new Date("October 25, 2014 12:30:00"), "Opening Ceremony"],
+			[new Date("October 25, 2014 13:30:00"), "Hacking begins!"],
+			[new Date("October 25, 2014 13:30:01"), "Career fair continues"],
+			[new Date("October 25, 2014 14:00:00"), "Pygame Workshop"],
+			[new Date("October 25, 2014 14:00:01"), "VR Workshop!"],
+			[new Date("October 25, 2014 15:00:00"), "Microsoft - Analytics Web APIs"],
+			[new Date("October 25, 2014 16:00:00"), "Google - Mesa Tech Talk"],
+			[new Date("October 25, 2014 17:00:00"), "Square - Technical Interviewing"],
+			[new Date("October 25, 2014 18:00:00"), "Square - Dinner for the ladies"],
+			[new Date("October 25, 2014 18:00:01"), "Dinner for the everyone"],
+			[new Date("October 25, 2014 19:00:01"), "EMC tech talk"],
+			[new Date("October 25, 2014 20:00:01"), "Video game tournaments"],
+			[new Date("October 26, 2014 00:00:01"), "SPECIAL EVENT"],
+			[new Date("October 26, 2014 01:00:00"), "Nap room opens"],
+			[new Date("October 26, 2014 07:00:00"), "Breakfast"],
+			[new Date("October 26, 2014 11:30:00"), "Lunch"],
+			[new Date("October 26, 2014 12:00:00"), "Hacking ends"],
+			[new Date("October 26, 2014 12:30:00"), "Expo"],
+			[new Date("October 26, 2014 2:00:00"), "Closing ceremony"],
+			[new Date("October 26, 2014 4:00:00"), "Time to go... :("]
+		]
 		
 		function getEvent() {
 			var currentTime = new Date();

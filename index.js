@@ -76,7 +76,8 @@ io.on('connection', function(socket){
 
 //archive
 app.get('/archive', function(req, res) {
-	res.send(JSON.stringify(messageArchive, null, '\t').split("\n").join("<br>"));
+	res.set("Content-Type", "text/plain")
+	res.send(JSON.stringify(messageArchive, null, '\t'));
 });
 
 http.listen(9001, function(){

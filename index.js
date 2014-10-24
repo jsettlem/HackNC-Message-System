@@ -39,6 +39,10 @@ app.get('/s.ogg', function(req, res){
   res.sendFile(path.join(__dirname, './', 's.ogg'));
 });
 
+app.get('/green.png', function(req, res){
+  res.sendFile(path.join(__dirname, './', 'green.png'));
+});
+
 app.get('/jquery.textfill.min.js', function(req, res){
   res.sendFile(path.join(__dirname, './', 'jquery.textfill.min.js'));
 });
